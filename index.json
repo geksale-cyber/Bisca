@@ -1,0 +1,203 @@
+[
+ {
+  "id": "massimo-bossetti",
+  "name": "Massimo Bossetti",
+  "pose": "stand"
+ },
+ {
+  "id": "mario-roggero",
+  "name": "Mario Roggero",
+  "pose": "stand"
+ },
+ {
+  "id": "alberto-stasi",
+  "name": "Alberto Stasi",
+  "pose": "stand"
+ },
+ {
+  "id": "amanda-knox",
+  "name": "Amanda Knox",
+  "pose": "cross"
+ },
+ {
+  "id": "fabrizio-corona",
+  "name": "Fabrizio Corona",
+  "pose": "cross"
+ },
+ {
+  "id": "wanna-marchi",
+  "name": "Wanna Marchi",
+  "pose": "point"
+ },
+ {
+  "id": "enzo-miccio",
+  "name": "Enzo Miccio",
+  "pose": "up"
+ },
+ {
+  "id": "cristiano-malgioglio",
+  "name": "Cristiano Malgioglio",
+  "pose": "up"
+ },
+ {
+  "id": "il-gabibbo",
+  "name": "Il Gabibbo",
+  "pose": "point"
+ },
+ {
+  "id": "jose-mourinho",
+  "name": "José Mourinho",
+  "pose": "cross"
+ },
+ {
+  "id": "mario-balotelli",
+  "name": "Mario Balotelli",
+  "pose": "up"
+ },
+ {
+  "id": "andrea-fratino",
+  "name": "Andrea Fratino",
+  "pose": "up"
+ },
+ {
+  "id": "david-parenzo",
+  "name": "David Parenzo",
+  "pose": "point"
+ },
+ {
+  "id": "nick-woltemade",
+  "name": "Nick Woltemade",
+  "pose": "cross"
+ },
+ {
+  "id": "davide-lacerenza",
+  "name": "Davide Lacerenza",
+  "pose": "stand"
+ },
+ {
+  "id": "giuseppe-cruciani",
+  "name": "Giuseppe Cruciani",
+  "pose": "point"
+ },
+ {
+  "id": "rocco-siffredi",
+  "name": "Rocco Siffredi",
+  "pose": "cross"
+ },
+ {
+  "id": "antonio-cassano",
+  "name": "Antonio Cassano",
+  "pose": "point"
+ },
+ {
+  "id": "daniele-adani",
+  "name": "Daniele Adani",
+  "pose": "point"
+ },
+ {
+  "id": "bello-figo",
+  "name": "Bello Figo",
+  "pose": "stand"
+ },
+ {
+  "id": "elly-schlein",
+  "name": "Elly Schlein",
+  "pose": "point"
+ },
+ {
+  "id": "ivan-juric",
+  "name": "Ivan Jurić",
+  "pose": "cross"
+ },
+ {
+  "id": "gianluca-vighini",
+  "name": "Gianluca Vighini",
+  "pose": "point"
+ },
+ {
+  "id": "clonicius-jr",
+  "name": "Clonicius Jr",
+  "pose": "up"
+ },
+ {
+  "id": "silvio-berlusconi",
+  "name": "Silvio Berlusconi",
+  "pose": "point"
+ },
+ {
+  "id": "benito-mussolini",
+  "name": "Benito Mussolini",
+  "pose": "up"
+ },
+ {
+  "id": "alessandro-roncaccia",
+  "name": "Alessandro Roncaccia",
+  "pose": "cross"
+ },
+ {
+  "id": "filippo-bisciglia",
+  "name": "Filippo Bisciglia",
+  "pose": "point"
+ },
+ {
+  "id": "maria-de-filippi",
+  "name": "Maria De Filippi",
+  "pose": "up"
+ },
+ {
+  "id": "massimiliano-allegri",
+  "name": "Massimiliano Allegri",
+  "pose": "up"
+ },
+ {
+  "id": "il-brasiliano",
+  "name": "Il Brasiliano",
+  "pose": "up"
+ },
+ {
+  "id": "raffaele-sollecito",
+  "name": "Raffaele Sollecito",
+  "pose": "up"
+ },
+ {
+  "id": "michele-misseri",
+  "name": "Michele Misseri",
+  "pose": "stand"
+ },
+ {
+  "id": "matteo-messina-denaro",
+  "name": "Matteo Messina Denaro",
+  "pose": "cross"
+ },
+ {
+  "id": "lele-mora",
+  "name": "Lele Mora",
+  "pose": "point",
+  "dir": "left"
+ },
+ {
+  "id": "nicolo-zaniolo",
+  "name": "Nicolò Zaniolo",
+  "pose": "up"
+ },
+ {
+  "id": "giuseppe-biggiogero",
+  "name": "Giuseppe Biggiogero",
+  "pose": "stand"
+ },
+ {
+  "id": "radja-nainggolan",
+  "name": "Radja Nainggolan",
+  "pose": "up"
+ },
+ {
+  "id": "vittorio-sgarbi",
+  "name": "Vittorio Sgarbi",
+  "pose": "point"
+ },
+ {
+  "id": "francesco-schettino",
+  "name": "Francesco Schettino",
+  "pose": "up"
+ }
+]
