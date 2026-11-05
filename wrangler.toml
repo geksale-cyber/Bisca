@@ -1,4 +1,4 @@
-name = "bisca"
+name = "cartebisca"
 main = "src/worker.js"
 compatibility_date = "2025-09-01"
 
@@ -24,6 +24,7 @@ new_sqlite_classes = ["Archive"]
 
 [vars]
 PROXY_DELAY_MS = "15000"
-CPU_DELAY_MS = "900"
+CPU_DELAY_MS = "5000"
+SUB_MS = "7000"
 # chiave per la pagina delle statistiche: /stats.html
 STATS_KEY = "Uy9XLF7sRgMf"

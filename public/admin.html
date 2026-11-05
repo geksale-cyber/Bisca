@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Bisca · Admin</title>
+<link rel="icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap">
+<style>
+:root { --bg:#0B0B0D; --surface:#18181B; --surface-2:#232328; --line:#2E2E35; --fg:#FFFFFF; --muted:#A1A1AA; --accent:#5B5FEF; --accent-text:#9A9DFF; --red:#FF6B6B; --sp:#7B7FFF; --mp:#0D9488; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.45 "Plus Jakarta Sans", system-ui, sans-serif; }
+main { max-width: 960px; margin: 0 auto; padding: 20px 16px 40px; display: flex; flex-direction: column; gap: 16px; }
+header { display: flex; align-items: center; gap: 12px; }
+header img { width: 48px; height: 48px; border-radius: 12px; }
+header h1 { margin: 0; font-size: 22px; font-weight: 800; }
+header p { margin: 0; color: var(--muted); font-size: 13px; }
+header .grow { flex: 1; min-width: 0; }
+button { font: inherit; cursor: pointer; }
+.btn { border: 0; border-radius: 12px; height: 40px; padding: 0 14px; background: var(--surface); color: var(--fg); font-weight: 700; box-shadow: inset 0 0 0 1.5px var(--line); }
+.btn.primary { background: var(--accent); box-shadow: none; }
+.panel { background: var(--surface); border-radius: 18px; padding: 16px; }
+h2 { margin: 0 0 10px; font-size: 13px; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+.kpi { background: var(--bg); border-radius: 14px; padding: 12px; }
+.kpi b { display: block; font-size: 28px; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.kpi span { font-size: 12.5px; color: var(--muted); }
+.legend { display: flex; gap: 14px; font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.chart { position: relative; }
+.chart svg { display: block; width: 100%; height: 180px; overflow: visible; }
+.chart .grid { stroke: var(--line); stroke-width: 1; }
+.chart .axis { fill: var(--muted); font-size: 11px; }
+.chart rect.hit { fill: transparent; }
+.chart g.on > * { filter: brightness(1.3); }
+.tip { position: absolute; pointer-events: none; background: var(--surface-2); border-radius: 10px; padding: 8px 10px; font-size: 13px; box-shadow: 0 8px 24px rgba(0,0,0,.5); white-space: nowrap; transform: translate(-50%, -100%); top: 0; }
+.tip[hidden] { display: none; }
+.tip b { display: block; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th { text-align: left; color: var(--muted); font-size: 11.5px; text-transform: uppercase; letter-spacing: .5px; padding: 4px 6px 8px; }
+td { padding: 8px 6px; border-top: 1px solid var(--line); }
+td.n { text-align: right; } th.n { text-align: right; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.pill { font-size: 12px; font-weight: 700; border-radius: 7px; padding: 2px 7px; background: var(--surface-2); color: #D4D4D8; }
+.muted { color: var(--muted); }
+.login { max-width: 360px; margin: 18vh auto 0; display: flex; flex-direction: column; gap: 12px; text-align: center; }
+.login input { height: 50px; border-radius: 12px; border: 0; padding: 0 14px; font: 600 17px inherit; font-family: inherit; color: var(--fg); background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--line); text-align: center; }
+.err { color: var(--red); font-size: 14px; }
+.tabs { display: flex; gap: 6px; background: var(--surface); padding: 5px; border-radius: 14px; }
+.tabs button { flex: 1; height: 40px; border: 0; border-radius: 10px; background: transparent; color: var(--muted); font-weight: 700; }
+.tabs button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+#pane { display: flex; flex-direction: column; gap: 16px; }
+.avtools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.avtools .muted { font-size: 13px; flex: 1; min-width: 220px; }
+.avgrid2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 10px; }
+.avc { background: var(--bg); border-radius: 14px; padding: 10px; display: grid; grid-template-columns: 64px 1fr; gap: 6px 10px; align-items: start; }
+.avc.hid { opacity: .55; }
+.avc img { width: 64px; height: 64px; border-radius: 50%; background: #D9DAE3; object-fit: cover; grid-row: span 3; }
+.avc input, .avc select { width: 100%; height: 34px; border-radius: 9px; border: 0; background: var(--surface-2); color: var(--fg); padding: 0 9px; font: 600 13.5px inherit; font-family: inherit; }
+.avc .row { display: flex; gap: 6px; }
+.avc .acts { grid-column: 1 / -1; display: flex; gap: 6px; flex-wrap: wrap; }
+.avc .acts button, .avc .acts label { height: 32px; padding: 0 10px; border-radius: 9px; border: 0; background: var(--surface-2); color: var(--fg); font-size: 12.5px; font-weight: 700; display: inline-grid; place-items: center; cursor: pointer; }
+.avc .acts .del { color: var(--red); margin-left: auto; }
+.avc .acts .vis.on { background: var(--accent); color: #fff; }
+.saved { font-size: 12px; color: var(--muted); grid-column: 1 / -1; min-height: 14px; }
+details summary { cursor: pointer; color: var(--accent-text); font-weight: 700; font-size: 14px; margin-top: 8px; }
+</style>
+</head>
+<body>
+<main id="root"></main>
+<script>
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const fmtDay = (d) => { const [y, m, g] = d.split('-'); return `${+g}/${+m}`; };
+const fmtTs = (t) => new Date(t).toLocaleString('it-IT', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+const KEY = 'bisca:statskey';
+let key = new URLSearchParams(location.search).get('key');
+try { key = key || localStorage.getItem(KEY); } catch {}
+
+function login(err) {
+  $('#root').innerHTML = `<form class="login" id="f"><img src="icons/icon-192.png" alt="" style="width:72px;height:72px;border-radius:18px;margin:0 auto"><h1 style="margin:0;font-size:22px">Pannello admin di Bisca</h1>
+    <p class="muted" style="margin:0">Inserisci la chiave che trovi in wrangler.toml (STATS_KEY).</p>
+    <input id="k" autocomplete="off" placeholder="Chiave" value="${esc(key || '')}">${err ? `<p class="err">${esc(err)}</p>` : ''}
+    <button class="btn primary" style="height:50px">Apri</button></form>`;
+  $('#f').onsubmit = (e) => { e.preventDefault(); key = $('#k').value.trim(); load(); };
+}
+
+let tab = location.hash === '#avatar' ? 'avatar' : 'stats';
+
+function shell(sub) {
+  $('#root').innerHTML = `
+  <header><img src="icons/icon-192.png" alt=""><div class="grow"><h1>Pannello admin</h1><p id="sub">${esc(sub || '')}</p></div>
+    <a class="btn" href="./" style="display:inline-grid;place-items:center;text-decoration:none">Gioco</a><button class="btn" id="re">Aggiorna</button></header>
+  <nav class="tabs"><button data-tab="stats" aria-pressed="${tab === 'stats'}">Statistiche</button><button data-tab="avatar" aria-pressed="${tab === 'avatar'}">Avatar</button></nav>
+  <div id="pane"></div>`;
+  $('#re').onclick = load;
+  document.querySelectorAll('[data-tab]').forEach((b) => { b.onclick = () => { tab = b.dataset.tab; history.replaceState(null, '', tab === 'avatar' ? '#avatar' : '#'); load(); }; });
+}
+
+async function load() {
+  if (!key) return login();
+  try {
+    const res = await fetch((tab === 'avatar' ? 'api/admin/avatars' : 'api/stats') + '?key=' + encodeURIComponent(key), { cache: 'no-store' });
+    if (res.status === 403) { try { localStorage.removeItem(KEY); } catch {} return login('Chiave sbagliata'); }
+    const data = await res.json();
+    try { localStorage.setItem(KEY, key); } catch {}
+    if (tab === 'avatar') { shell(`${data.length} avatar · ${data.filter((a) => !a.hidden).length} visibili`); drawAvatars(data); }
+    else { shell(`Statistiche aggiornate ${fmtTs(data.updated)}`); draw(data); }
+  } catch { return login('Non riesco a collegarmi al server'); }
+}
+
+function kpi(v, label) { return `<div class="kpi"><b>${v ?? 0}</b><span>${label}</span></div>`; }
+
+function chart(id, rows, series, fmt) {
+  const el = document.getElementById(id);
+  const W = el.clientWidth || 900, H = 180, top = 10, bottom = 24, left = 26;
+  const max = Math.max(1, ...rows.map((r) => series.reduce((a, s) => a + r[s.k], 0)));
+  const step = Math.max(1, Math.ceil(max / 4));
+  const ticks = []; for (let v = 0; v <= max + step - 1 && ticks.length < 6; v += step) ticks.push(v);
+  const yMax = ticks[ticks.length - 1] || 1;
+  const bw = (W - left) / rows.length;
+  const y = (v) => top + (H - top - bottom) * (1 - v / yMax);
+  let g = ticks.map((t) => `<line class="grid" x1="${left}" x2="${W}" y1="${y(t)}" y2="${y(t)}"/><text class="axis" x="${left - 6}" y="${y(t) + 4}" text-anchor="end">${t}</text>`).join('');
+  rows.forEach((r, i) => {
+    const x = left + i * bw + 2, w = Math.max(2, bw - 4);
+    let acc = 0, bars = '';
+    series.forEach((s, si) => {
+      const v = r[s.k]; if (!v) return;
+      const y1 = y(acc + v), y0 = y(acc);
+      const h = Math.max(1, y0 - y1 - (acc ? 2 : 0)); // 2px di stacco tra i pezzi
+      const last = !series.slice(si + 1).some((n) => r[n.k]);
+      bars += last
+        ? `<path d="M${x},${y1 + h} V${y1 + 4} Q${x},${y1} ${x + 4},${y1} H${x + w - 4} Q${x + w},${y1} ${x + w},${y1 + 4} V${y1 + h} Z" fill="${s.c}"/>`
+        : `<rect x="${x}" y="${y1}" width="${w}" height="${h}" fill="${s.c}"/>`;
+      acc += v;
+    });
+    if (i % 5 === 4 || i === rows.length - 1) g += `<text class="axis" x="${x + w / 2}" y="${H - 6}" text-anchor="middle">${fmtDay(r.day)}</text>`;
+    g += `<g class="bar" data-i="${i}">${bars}</g><rect class="hit" data-i="${i}" x="${left + i * bw}" y="0" width="${bw}" height="${H - bottom}"/>`;
+  });
+  el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Grafico per giorno">${g}</svg><div class="tip" hidden></div>`;
+  const tip = el.querySelector('.tip');
+  el.querySelectorAll('rect.hit').forEach((h) => {
+    const show = () => {
+      const r = rows[h.dataset.i];
+      tip.innerHTML = `<b>${fmtDay(r.day)}</b>${fmt(r)}`;
+      const box = el.getBoundingClientRect(), hb = h.getBoundingClientRect();
+      tip.style.left = Math.min(box.width - 70, Math.max(70, hb.left - box.left + hb.width / 2)) + 'px';
+      tip.hidden = false;
+      el.querySelectorAll('g.bar.on').forEach((b) => b.classList.remove('on'));
+      el.querySelector(`g.bar[data-i="${h.dataset.i}"]`)?.classList.add('on');
+    };
+    h.addEventListener('mouseenter', show); h.addEventListener('click', show);
+    h.addEventListener('mouseleave', () => { tip.hidden = true; el.querySelector('g.bar.on')?.classList.remove('on'); });
+  });
+}
+
+const typeName = { sp_start: 'Single player iniziata', sp_end: 'Single player finita', mp_start: 'Multiplayer iniziata', mp_end: 'Multiplayer finita' };
+
+function draw(d) {
+  const p = d.people, g = d.games;
+  $('#pane').innerHTML = `
+  <section class="panel"><h2>Persone</h2><div class="kpis">
+    ${kpi(p.total, 'telefoni in tutto')}${kpi(p.today, 'oggi')}${kpi(p.week, 'ultimi 7 giorni')}${kpi(p.month, 'ultimi 30 giorni')}${kpi(p.installed, "l'hanno messa in Home")}
+  </div></section>
+  <section class="panel"><h2>Partite</h2><div class="kpis">
+    ${kpi(g.spStarted, 'single player iniziate')}${kpi(g.spFinished, 'single player finite')}${kpi(g.rooms, 'stanze create')}${kpi(g.mpStarted, 'multiplayer iniziate')}${kpi(g.mpFinished, 'multiplayer finite')}
+    ${kpi(g.avgTable || '–', 'giocatori per tavolo (media)')}${kpi(g.avgHumans || '–', 'persone vere per tavolo')}${kpi(g.rounds, 'turni giocati')}
+  </div></section>
+  <section class="panel"><h2>Persone al giorno · ultimi 30 giorni</h2><div class="chart" id="c1"></div></section>
+  <section class="panel"><h2>Partite al giorno · ultimi 30 giorni</h2>
+    <div class="legend"><span><i style="background:var(--sp)"></i>Single player</span><span><i style="background:var(--mp)"></i>Multiplayer</span></div>
+    <div class="chart" id="c2"></div>
+    <details><summary>Vedi come tabella</summary><table><tr><th>Giorno</th><th class="n">Persone</th><th class="n">Single</th><th class="n">Multi</th></tr>
+      ${d.daily.slice().reverse().map((r) => `<tr><td>${fmtDay(r.day)}</td><td class="n">${r.people}</td><td class="n">${r.sp}</td><td class="n">${r.mp}</td></tr>`).join('')}</table></details>
+  </section>
+  <div class="two">
+    <section class="panel"><h2>Chi gioca di più</h2>
+      ${d.players.length ? `<table><tr><th>Nome</th><th class="n">Partite</th><th class="n">Ultima</th></tr>${d.players.map((r) => `<tr><td>${esc(r.name)}</td><td class="n">${r.games}</td><td class="n muted">${fmtTs(r.last)}</td></tr>`).join('')}</table>` : '<p class="muted">Ancora nessuna partita.</p>'}
+    </section>
+    <section class="panel"><h2>Ultime partite</h2>
+      ${d.recent.length ? `<table><tr><th>Quando</th><th>Cosa</th><th class="n">Al tavolo</th></tr>${d.recent.map((r) => `<tr><td class="muted">${fmtTs(r.ts)}</td><td>${typeName[r.type] || r.type}${r.name ? ` · ${esc(r.name)}` : ''}${r.rounds ? ` <span class="pill">${r.rounds} turni</span>` : ''}</td><td class="n">${r.players || ''}${r.humans ? ` <span class="muted">(${r.humans} persone)</span>` : ''}</td></tr>`).join('')}</table>` : '<p class="muted">Ancora nessuna partita.</p>'}
+    </section>
+  </div>
+  <p class="muted" style="font-size:12.5px;margin:0">Ogni telefono è contato con un codice a caso salvato nell'app: niente dati personali, solo il nome scelto in gioco. Le partite giocate sulla pagina di Claude non sono contate.</p>`;
+  chart('c1', d.daily, [{ k: 'people', c: 'var(--sp)' }], (r) => `${r.people} ${r.people === 1 ? 'persona' : 'persone'}`);
+  chart('c2', d.daily, [{ k: 'sp', c: 'var(--sp)' }, { k: 'mp', c: 'var(--mp)' }], (r) => `Single player ${r.sp}<br>Multiplayer ${r.mp}`);
+}
+
+// ================================================================ AVATAR
+const POSES = { point: 'Indica', up: 'Guarda in alto', cross: 'Braccia conserte', stand: 'In piedi' };
+let AV = [];
+
+async function apiAdmin(body) {
+  const res = await fetch('api/admin/avatars?key=' + encodeURIComponent(key), { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || 'Errore');
+  return data;
+}
+
+// Dall'immagine caricata (già scontornata) prepara le due versioni: figura intera e cerchio.
+async function makeImages(file) {
+  const url = URL.createObjectURL(file);
+  try {
+    const im = await new Promise((ok, ko) => { const i = new Image(); i.onload = () => ok(i); i.onerror = ko; i.src = url; });
+    const c = document.createElement('canvas'); c.width = im.naturalWidth; c.height = im.naturalHeight;
+    const x = c.getContext('2d'); x.drawImage(im, 0, 0);
+    const d = x.getImageData(0, 0, c.width, c.height).data;
+    let t = c.height, b = -1, l = c.width, r = -1;
+    for (let y = 0; y < c.height; y++) for (let k = 0; k < c.width; k++) if (d[(y * c.width + k) * 4 + 3] > 20) { if (y < t) t = y; if (y > b) b = y; if (k < l) l = k; if (k > r) r = k; }
+    if (b < 0) throw new Error('Immagine vuota');
+    const fw = r - l + 1, fh = b - t + 1;
+    const full = document.createElement('canvas'); const H = Math.min(400, fh); full.height = H; full.width = Math.round(fw * H / fh);
+    full.getContext('2d').drawImage(c, l, t, fw, fh, 0, 0, full.width, full.height);
+    const D = 256, sc = Math.min(D * 0.86 / fh, D * 0.8 / fw);
+    const circ = document.createElement('canvas'); circ.width = circ.height = D;
+    const w = fw * sc, h = fh * sc;
+    circ.getContext('2d').drawImage(c, l, t, fw, fh, (D - w) / 2, (D - h) / 2 + 4, w, h);
+    const opaque = d[3] > 250 && d[(c.width - 1) * 4 + 3] > 250; // angoli pieni: probabilmente non scontornata
+    return { full: full.toDataURL('image/webp', 0.88), circle: circ.toDataURL('image/webp', 0.9), opaque };
+  } finally { URL.revokeObjectURL(url); }
+}
+
+const nameFromFile = (f) => f.name.replace(/\.[a-z0-9]+$/i, '').replace(/[-_]+/g, ' ').replace(/\b\w/g, (m) => m.toUpperCase()).slice(0, 22);
+
+function drawAvatars(list) {
+  AV = list;
+  $('#pane').innerHTML = `
+  <section class="panel"><div class="avtools">
+    <label class="btn primary" style="display:inline-grid;place-items:center">Aggiungi avatar<input type="file" id="addf" accept="image/png,image/webp,application/json,.json" multiple hidden></label>
+    <span class="muted">Immagini PNG o WebP già scontornate (sfondo trasparente). Puoi selezionarne tante insieme; se aggiungi anche un file index.json, nomi e pose vengono presi da lì. I nascosti non compaiono a nessuno; chi li aveva dovrà sceglierne un altro.</span>
+  </div><p id="prog" class="muted" style="margin:8px 0 0;font-size:13px"></p></section>
+  <section class="panel"><h2>Avatar · le frecce cambiano l'ordine</h2>
+    ${list.length ? `<div class="avgrid2">${list.map((a, i) => card(a, i)).join('')}</div>` : '<p class="muted">Nessun avatar: aggiungine qualcuno.</p>'}
+  </section>`;
+  $('#addf').onchange = (e) => addFiles([...e.target.files]);
+  document.querySelectorAll('.avc').forEach(bindCard);
+}
+
+function card(a, i) {
+  return `<div class="avc ${a.hidden ? 'hid' : ''}" data-id="${esc(a.id)}">
+    <img src="api/avatars/img/${encodeURIComponent(a.id)}/circle?v=${a.v}" alt="">
+    <input data-f="name" value="${esc(a.name)}" maxlength="22" aria-label="Nome">
+    <div class="row"><select data-f="pose" aria-label="Posa">${Object.entries(POSES).map(([k, v]) => `<option value="${k}" ${a.pose === k ? 'selected' : ''}>${v}</option>`).join('')}</select>
+      <select data-f="dir" aria-label="Verso" title="Verso dove indica">${['', 'left'].map((k) => `<option value="${k}" ${(a.dir || '') === k ? 'selected' : ''}>${k ? 'indica a sinistra' : 'indica a destra'}</option>`).join('')}</select></div>
+    <input data-f="say" value="${esc(a.say)}" maxlength="60" placeholder="Frase della nuvoletta (facoltativa)" aria-label="Frase">
+    <div class="acts">
+      <button data-a="up" ${i === 0 ? 'disabled' : ''} aria-label="Sposta su">↑</button><button data-a="down" ${i === AV.length - 1 ? 'disabled' : ''} aria-label="Sposta giù">↓</button>
+      <button class="vis ${a.hidden ? '' : 'on'}" data-a="vis">${a.hidden ? 'Nascosto' : 'Visibile'}</button>
+      <label>Sostituisci<input type="file" data-a="img" accept="image/png,image/webp" hidden></label>
+      <button class="del" data-a="del">Elimina</button>
+    </div><div class="saved"></div></div>`;
+}
+
+function bindCard(el) {
+  const a = AV.find((x) => x.id === el.dataset.id);
+  const msg = (t) => { el.querySelector('.saved').textContent = t; };
+  let tm;
+  const save = async (extra = {}) => {
+    msg('Salvo…');
+    try { const r = await apiAdmin({ action: 'save', item: a, ...extra }); a.v = r.v; msg('Salvato'); return true; } catch (e) { msg(e.message); return false; }
+  };
+  el.querySelectorAll('[data-f]').forEach((inp) => {
+    inp.oninput = inp.onchange = () => { a[inp.dataset.f] = inp.value || (inp.dataset.f === 'dir' ? null : ''); clearTimeout(tm); tm = setTimeout(save, 500); };
+  });
+  el.querySelectorAll('[data-a]').forEach((b) => {
+    const act = b.dataset.a;
+    if (act === 'img') { b.onchange = async () => { const f = b.files[0]; if (!f) return; msg('Preparo l\'immagine…'); try { const im = await makeImages(f); if (await save({ full: im.full, circle: im.circle })) load(); } catch (e) { msg(e.message || 'Immagine non valida'); } }; return; }
+    b.onclick = async () => {
+      if (act === 'vis') { a.hidden = !a.hidden; if (await save()) load(); }
+      if (act === 'del') { if (!confirm(`Eliminare per sempre ${a.name}? L'immagine viene cancellata.`)) return; await apiAdmin({ action: 'delete', id: a.id }); load(); }
+      if (act === 'up' || act === 'down') {
+        const i = AV.indexOf(a), j = act === 'up' ? i - 1 : i + 1;
+        [AV[i], AV[j]] = [AV[j], AV[i]];
+        await apiAdmin({ action: 'order', ids: AV.map((x) => x.id) }); load();
+      }
+    };
+  });
+}
+
+async function addFiles(files) {
+  const prog = $('#prog');
+  let meta = {};
+  const js = files.find((f) => /\.json$/i.test(f.name));
+  if (js) { try { for (const m of JSON.parse(await js.text())) meta[m.id] = m; } catch { prog.textContent = 'index.json non leggibile: uso i nomi dei file'; } }
+  const order = Object.keys(meta);
+  const pos = (f) => { const i = order.indexOf(f.name.replace(/\.[a-z0-9]+$/i, '')); return i < 0 ? 1e9 : i; };
+  const imgs = files.filter((f) => /\.(png|webp)$/i.test(f.name)).sort((x, y) => pos(x) - pos(y));
+  let done = 0, warn = 0;
+  for (const f of imgs) {
+    prog.textContent = `Carico ${done + 1} di ${imgs.length}: ${f.name}`;
+    const id = f.name.replace(/\.[a-z0-9]+$/i, '');
+    const m = meta[id] || {};
+    try {
+      const im = await makeImages(f);
+      if (im.opaque) warn++;
+      await apiAdmin({ action: 'save', item: { name: m.name || nameFromFile(f), pose: m.pose, dir: m.dir, say: m.say || '' }, full: im.full, circle: im.circle });
+      done++;
+    } catch (e) { prog.textContent = `${f.name}: ${e.message}`; }
+  }
+  prog.textContent = `Aggiunti ${done} avatar${warn ? ` · ${warn} sembrano non scontornati (sfondo pieno)` : ''}`;
+  setTimeout(load, 600);
+}
+
+load();
+</script>
+</body>
+</html>

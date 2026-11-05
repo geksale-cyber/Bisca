@@ -26,24 +26,25 @@ npx wrangler deploy
 
 ## Come si usa
 
-- **Home**: "Gioca con i tuoi amici" oppure "Single player".
-- **Single player**: scegli nome, quanti avversari (2-12), la difficoltà e la velocità della CPU.
-- **Come scaricare l'app**: dalla home, le istruzioni per iPhone e Android per aggiungerla alla schermata Home.
-- **Crea una stanza**: scegli il nome, entri nella sala d'attesa con il codice d'invito da mandare. Da host puoi aggiungere CPU (CPU1, CPU2…) scegliendo quante e il livello, cambiare il livello di ognuna, togliere giocatori e CPU, e avviare quando al tavolo siete almeno in 3.
-- **Accedi a una stanza**: nome e codice (o apri il link d'invito). Se il nome è già usato nella stanza te lo dice prima di farti entrare. A partita iniziata puoi entrare come spettatore.
-- In sala d'attesa ognuno può cambiarsi il nome (matita accanto al proprio nome).
-- **Fine partita**: "Inizia una nuova partita, torna in lobby" (stessa stanza, stessi giocatori e CPU) oppure "Esci dalla stanza, torna al menù principale".
-- **Tempo per giocare**: chi è online ha al massimo 1 minuto per ogni mossa; il conto alla rovescia compare negli ultimi 15 secondi. Chi va offline ha 30 secondi per rientrare (sempre dentro il minuto). Allo scadere gioca la CPU al suo posto. Al tavolo il pallino verde o rosso dice chi è online.
-- **Espulsione**: toccando un giocatore l'host può espellerlo dal turno successivo. Se l'host resta offline più di un minuto, un altro giocatore può diventare host.
-- **Chat** (solo multiplayer): pallino in basso a destra con i messaggi non letti. Scrivendo @ escono i nomi di chi è nella stanza; chi viene taggato vede il messaggio evidenziato, il telefono vibra e sul pallino compare la @.
-- **Avatar**: toccando il proprio avatar in sala d'attesa si sceglie una foto (fotocamera o galleria, ritagliata tonda) o un personaggio. Il telefono lo ricorda per le stanze successive.
-- Il telefono ricorda il posto di ognuno: se l'app si chiude si rientra nella stessa stanza.
+- **Home**: la tavolata animata (tocca un personaggio, quello nascosto o l'asso di denari), poi "Gioca con i tuoi amici", "Single player", "Spettatore" e "Come scaricare l'app". "Allenati e impara la Bisca" apre le lezioni di Fabrizio Corona su tre livelli (Principiante, Intermedio, Avanzato). La Lezione 0 è una mano guidata; le altre sono situazioni preparate: decidi, vedi a parole quanto è probabile che vada bene, leggi il ragionamento, poi Riprova, "E se…?" (una variante), "Guarda come va" (si gioca il resto della mano) o Avanti. I contatori (prese in palio, chiamate, differenza, carte più forti ancora in giro) ci sono solo nelle lezioni. L'ultima è una partita vera con il maestro che fa domande e, se vuoi, dà un consiglio a parole. Un livello si apre quando completi il precedente; i progressi restano sul telefono.
+- **Single player**: nome e avatar, quanti avversari (2-12), difficoltà e vista. La CPU aspetta 5 secondi prima di ogni mossa (4 a difficile).
+- **Crea / Accedi a una stanza**: nome e avatar si scelgono subito, prima di entrare. Un personaggio già preso nella stanza non si può scegliere. Dal link d'invito si sceglie se giocare o guardare.
+- **Vista del tavolo**: "Tavolo" (ovale blu, giocatori attorno in senso antiorario, carte giocate accanto a chi le ha tirate) o "Classica" (fila dei giocatori in alto). Si cambia dal menu durante la partita o prima del single player.
+- **Giocare**: si tocca la carta e parte subito (l'asso di denari chiede alta o bassa). Nel menu c'è l'opzione "Chiedi conferma prima di giocare".
+- **Pulsanti rapidi** (accanto alla mano):
+  - **Presa**: mai l'asso di denari. Se ti manca solo questa presa, la tua carta più alta. Se te ne servono altre, la più bassa che prende di sicuro; se nessuna è sicura, la più alta come consiglio (segnato con "?"). Disattivato se sei già a posto (bordo rosso) o se nessuna carta prende.
+  - **Parcheggio**: quando apri tu, la carta più bassa. Altrimenti solo carte che restano sotto la migliore sul tavolo: tiene da parte le carte che servono per le prese mancanti (una in più se le chiamate superano le mani) e parcheggia la più scarsa; se sei a posto butta la più alta che resta sotto. L'asso basso solo come ultima scelta. Disattivato se nessuna carta resta sotto.
+- **Tempo per giocare (multiplayer)**: chi è online ha 1 minuto per mossa (il conto alla rovescia compare negli ultimi 15 secondi). Chi va offline ha 30 secondi per rientrare; poi gioca la CPU al suo posto, e da lì in avanti ogni sua mossa parte dopo 7 secondi finché non rientra. Le CPU aggiunte dall'host giocano dopo 6 secondi.
+- **Spettatori**: dalla home "Spettatore" mostra le partite in corso e le stanze in attesa. Chi guarda (anche chi è stato eliminato) vede solo le carte giocate: le mani non partono proprio dal server. Può chiedere a un giocatore di vedere le sue carte: se dice sì le vede fino alla fine della partita (tranne nel turno da 1 carta); se dice no può chiedere a un altro. I giocatori vedono l'occhio con il numero di spettatori.
+- **Fine partita**: "Inizia una nuova partita, torna in lobby" oppure "torna al menù principale".
+- **Chat** (solo multiplayer) con @tag, **espulsione** dal turno successivo, **cambio host** se l'host resta offline più di un minuto.
 
-## Statistiche
+## Pannello admin
 
-Apri `https://bisca.<tuo-nome>.workers.dev/stats.html` e inserisci la chiave che trovi in `wrangler.toml` alla voce `STATS_KEY`. La pagina non è collegata dall'app: la vede solo chi ha la chiave.
-Mostra quante persone (telefoni) usano l'app, quante l'hanno messa in Home, le partite single player e multiplayer iniziate e finite, l'andamento degli ultimi 30 giorni, chi gioca di più e le ultime partite.
-Ogni telefono è contato con un codice a caso salvato nell'app, senza dati personali. Per cambiare la chiave modifica `STATS_KEY` (tieni il repository GitHub privato).
+`https://<il-tuo-indirizzo>/admin.html` con la chiave `STATS_KEY` di `wrangler.toml`.
+- **Statistiche**: persone, partite, grafici degli ultimi 30 giorni, chi gioca di più, ultime partite.
+- **Avatar**: aggiungi (PNG o WebP già scontornati, anche tanti insieme; con un `index.json` accanto vengono letti nomi e pose), rinomina, posa (serve alla scena della home), frase della nuvoletta, visibile/nascosto, ordine, sostituisci immagine, elimina. Gli avatar stanno nell'archivio sul server, non nei file dell'app. Chi aveva un avatar nascosto o eliminato ne sceglie un altro.
+- La prima volta l'elenco è vuoto: carica la cartella "avatar-iniziali" (i 40 personaggi con il loro index.json).
 
 ## La CPU
 
@@ -59,6 +60,7 @@ npm install
 npm run dev                         # http://localhost:8787
 npm test                            # regole e prove sulla CPU
 npx wrangler dev --var CPU_DELAY_MS:60 --var PROXY_DELAY_MS:1500   # in un altro terminale
+node test/e2e-extra.mjs             # timer, subentro, spettatori (vedi intestazione del file)
 npm run e2e                         # partita multiplayer completa via WebSocket
 npm run bench                       # torneo CPU contro CPU
 ```
@@ -69,7 +71,10 @@ npm run bench                       # torneo CPU contro CPU
 - `public/lib/ai.js` — la CPU
 - `public/app.js`, `public/style.css`, `public/index.html` — l'app
 - `public/carte/` — le 40 carte (dalle tue foto)
-- `public/avatar/` — i personaggi: un file `<id>.webp` per ognuno e l'elenco in `index.json` (`[{"id": "nonno", "name": "Il nonno"}]`)
+- `public/lib/quick.js` — i tasti rapidi Presa e Parcheggio
+- `public/lib/tutorial.js` — le lezioni: carte preparate, scenari con varianti, mosse delle CPU e frasi del maestro (le probabilità vengono da `evaluateOptions` in `ai.js` e sono mostrate solo a parole)
+- `public/admin.html` — pannello admin (statistiche e avatar)
+- `public/icons/` — icone dell'app, titolo della home e dorso delle carte
 - `src/worker.js` — server: stanze, CPU lato server, archivio partite e profili
 - `tools/build-artifact.mjs` — prepara la versione single player per la pagina su Claude
 - `wrangler.toml` — configurazione Cloudflare
